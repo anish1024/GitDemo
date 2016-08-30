@@ -12,9 +12,18 @@ git init 			 /* create a new repo */
 git config --global user.name "YOUR_FULL_NAME"
 git config --global user.email "YOUR_EMAIL_ADDRESS"
 
-git status           /* shows the current commit state */
-git add 'filename'	 /* add file to staging area */
-git commit    		 /* will commit to git */
+git status          		 /* shows the current commit state */
+git add 'filename'			 /* add file to staging area */
+git commit    				 /* Commits the tracked changes and prepares them to be pushed to a remote repository */
+git commit -m "First commit" 
+git reset --soft HEAD~1		 /*  To remove this commit and modify the file */
+
+git remote add <repoName> <remote-rep-URL> /* SetUps the new remote repo link.  */
+git remote remove <repoName>
+git remote -v				/* View currently setup remote Links. */
+
+git pull <repoName> master   /* checkout from remote repo */
+git push <repoName> master   /* commit to remote repo */ 
 
 git diff 					/* show diff between working dir and staging area */
 git diff --stage 			/* show diff between staging area and git repository */
