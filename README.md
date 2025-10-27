@@ -260,6 +260,17 @@ Follow these steps to push a local project folder to a **new GitHub repository**
    ```bash
    git add .
    ```
+   - add .gitignore file to exclude file/folder. 
+   - Typically entries would look like
+     ```
+         .qodo/
+         node_modules/
+         swagger-ui/
+      ```
+   - Use the following command to reset .gitignore or previous git add cmd
+      ```bash
+         git rm --cached -r -f -- . 
+      ```
 
 3. **Commit your changes:**
    ```bash
