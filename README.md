@@ -36,7 +36,73 @@ git config --list
 git help <command>
 ```
 
+### 1. Fixing "Author identity unknown" Error
+If Git throws an error saying it cannot auto-detect your email address, you need to configure your identity.
+
+* **For the current repository only:**
+  ```bash
+  git config user.name "Your Name"
+  git config user.email "your.email@example.com"
+
+```
+
+* **Globally across all repositories:**
+```bash
+git config --global user.name "Your Name"
+git config --global user.email "your.email@example.com"
+
+```
+
 ---
+
+### 2. Setting up SSH Authentication for GitHub
+
+To push code securely without typing credentials every time:
+
+1. **Generate an SSH key:**
+```bash
+ssh-keygen -t ed25519 -c "your.email@example.com"
+```
+*(Press Enter to accept defaults)*
+
+2. **Start the SSH agent and add your key:**
+```bash
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_ed25519
+```
+
+3. **Copy your public key:**
+```bash
+cat ~/.ssh/id_ed25519.pub
+```
+*(Copy the output starting with `ssh-ed25519`)*
+
+4. **Add to GitHub:**
+* Go to **GitHub Settings > SSH and GPG keys > New SSH key**, paste your key, and save.
+
+5. **Test your connection:**
+```bash
+ssh -T git@github.com
+```
+
+### 3. Correcting a Wrong Remote Origin
+If your remote repository URL is incorrect:
+
+1. **Check current remotes:**
+```bash
+git remote -v
+```
+
+2. **Update the remote URL:**
+```bash
+git remote set-url origin git@github.com:YOUR_USERNAME/YOUR_REPOSITORY_NAME.git
+```
+
+3. **Alternative (Remove and Re-add):**
+```bash
+git remote remove origin
+git remote add origin git@github.com:YOUR_USERNAME/YOUR_REPOSITORY_NAME.git
+```
 
 ## 🏁 Repository Management
 
@@ -76,8 +142,27 @@ git commit -m "message"
 git commit --amend
 git reset <file>
 ```
-
 ---
+### Undoing a Previous Commit
+
+* **If the commit is local only (Not pushed yet):**
+* *Keep your code changes:*
+```bash
+git reset --soft HEAD^
+```
+
+* *Delete commit and changes completely (Destructive):*
+```bash
+git reset --hard HEAD^
+```
+
+* **If the commit is already pushed to GitHub:**
+Create a new commit that safely reverses the changes:
+```bash
+git revert HEAD
+git push
+```
+
 
 ## 🔍 History & Logs
 
@@ -134,7 +219,7 @@ git revert <commit>
 
 ---
 
-# 🌐 GitHub CLI (gh) — Advanced Usage
+## 🌐 GitHub CLI (gh) — Advanced Usage
 
 The **GitHub CLI (`gh`)** integrates GitHub operations directly into your terminal.
 
@@ -190,7 +275,7 @@ gh pr status
 
 ---
 
-# 🧰 Advanced Git Tools — In-Depth
+## 🧰 Advanced Git Tools — In-Depth
 
 ### 🧭 `git reflog`
 Track every movement of HEAD. Recover lost commits or undo resets:
@@ -244,7 +329,7 @@ git blame <file>
 
 ---
 
-# 🚀 Uploading an Existing Project to GitHub (First-Time Setup)
+## 🚀 Uploading an Existing Project to GitHub (First-Time Setup)
 
 Follow these steps to push a local project folder to a **new GitHub repository** for the first time.
 
@@ -295,7 +380,7 @@ Follow these steps to push a local project folder to a **new GitHub repository**
 
 ---
 
-# 🔑 Using GitHub Personal Access Tokens (PAT)
+## 🔑 Using GitHub Personal Access Tokens (PAT)
 
 GitHub **no longer supports password authentication** for HTTPS pushes and pulls.  
 Instead, use **Personal Access Tokens (PATs)**.
@@ -331,7 +416,7 @@ This saves your token in Windows Credential Manager, so you don’t have to re-e
 
 ---
 
-# 💻 Maintaining Multiple Git Repositories with Different User IDs on Windows
+## 💻 Maintaining Multiple Git Repositories with Different User IDs on Windows
 
 You can maintain **separate Git identities** on the same machine using per-folder config or SSH keys.
 
@@ -395,7 +480,7 @@ Each repository will store separate credentials via Windows Credential Manager.
 
 ---
 
-# ✅ Summary Table — Multi-Account Setup
+### ✅ Summary Table — Multi-Account Setup
 
 | Method | Ideal For | Key Setup |
 |--------|------------|-----------|
